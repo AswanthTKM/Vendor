@@ -3,7 +3,7 @@ package com.FinalProject.Entity;
 public class accounts {
 	
 	private int sno;
-	private int vendorid;
+	private String vendorid;
 	private String subscription;
 	private int paidamount;
 	public int getSno() {
@@ -12,10 +12,10 @@ public class accounts {
 	public void setSno(int sno) {
 		this.sno = sno;
 	}
-	public int getVendorid() {
+	public String getVendorid() {
 		return vendorid;
 	}
-	public void setVendorid(int vendorid) {
+	public void setVendorid(String vendorid) {
 		this.vendorid = vendorid;
 	}
 	public String getSubscription() {
@@ -31,7 +31,7 @@ public class accounts {
 		this.paidamount = paidamount;
 	}
 	
-	public accounts(int sno, int vendorid, String subscription, int paidamount) {
+	public accounts(int sno, String vendorid, String subscription, int paidamount) {
 		super();
 		this.sno = sno;
 		this.vendorid = vendorid;

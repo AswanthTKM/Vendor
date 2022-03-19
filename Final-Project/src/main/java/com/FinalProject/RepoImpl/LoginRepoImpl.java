@@ -119,5 +119,73 @@ public class LoginRepoImpl implements LoginRepo {
 		}
 		return false;
 	}
+
+	@Override
+	public String transcationAdmin(String vendorid, int amount) {
+		
+		// TODO Auto-generated method stub
+			String str="update transact set balance=balance+? Where user='admin';";
+			int r=jt.update(str,new Object[] {amount});
+			if(r>=1)
+				return "Amount transferred Succesfully";
+			else
+				return "Error Occured";
+		
+	}
+	
+	@Override
+	public String transcationVendor(String vendorid, int amount) {
+		// TODO Auto-generated method stub
+		
+			String str="update transact set balance=balance-? Where user=?;";
+			int r=jt.update(str,new Object[] {amount,vendorid});
+			if(r>=1)
+				return "Amount transferred Succesfully";
+			else
+				return "Error Occured";
+				
+		
+	}
+
+	@Override
+	public String getVendorId(String name) {
+		// TODO Auto-generated method stub
+		String str="select vendorid from vendor where vendorname=?;";
+		try
+		{
+			vendor x=(vendor) jt.queryForObject(str, new Object[] {name}, new BeanPropertyRowMapper(vendor.class));
+			return x.getVendorid();
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+
+		return null;
+	}
+
+	@Override
+	public String addToTransact(String user) {
+		// TODO Auto-generated method stub
+		String str="insert into transact (user) values(?);";
+		try
+		{
+			int r=jt.update(str, new Object[] {user});
+			if(r>=1)
+			{
+				return "Added";
+			}
+			else
+		       return "Error";
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+	
+		return null;
+	}
+
+	
 		
 	}

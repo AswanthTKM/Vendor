@@ -12,7 +12,9 @@ public class vendor {
 	private String cusinetype;
 	private String uploadmenucard;
 	private String uploadphoto;
-	private String status;
+	private String reqstatus;
+	
+	private String activestatus;
 	
 	public String getVendorid() {
 		return vendorid;
@@ -74,16 +76,15 @@ public class vendor {
 	public void setUploadphoto(String uploadphoto) {
 		this.uploadphoto = uploadphoto;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public vendor( String vendorname, String email, String password, String location, String websiteid,
-			String vendortype, String cusinetype, String uploadmenucard, String uploadphoto) {
+	public vendor() {
 		super();
-		
+		// TODO Auto-generated constructor stub
+	}
+	public vendor(String vendorid, String vendorname, String email, String password, String location, String websiteid,
+			String vendortype, String cusinetype, String uploadmenucard, String uploadphoto, String reqstatus,
+			String activestatus) {
+		super();
+		this.vendorid = vendorid;
 		this.vendorname = vendorname;
 		this.email = email;
 		this.password = password;
@@ -93,11 +94,23 @@ public class vendor {
 		this.cusinetype = cusinetype;
 		this.uploadmenucard = uploadmenucard;
 		this.uploadphoto = uploadphoto;
-		
+		this.reqstatus = reqstatus;
+		this.activestatus = activestatus;
 	}
-	public vendor() {
-		super();
+	public String getReqstatus() {
+		return reqstatus;
 	}
+	public void setReqstatus(String reqstatus) {
+		this.reqstatus = reqstatus;
+	}
+	public String getActivestatus() {
+		return activestatus;
+	}
+	public void setActivestatus(String activestatus) {
+		this.activestatus = activestatus;
+	}
+	
+	
 	
 	
 	

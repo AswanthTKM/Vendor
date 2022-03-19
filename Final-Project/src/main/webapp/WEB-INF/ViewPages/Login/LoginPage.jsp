@@ -13,7 +13,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-<body style="background:url(https://cognizantonline-my.sharepoint.com/:i:/r/personal/2080232_cognizant_com/Documents/Microsoft%20Teams%20Chat%20Files/log.jpeg?csf=1&web=1&e=ZRPJB6);background-size:100% 500%;">
+<body style="background-color:rgb(206, 203, 36); background-image:url(https://images.pexels.com/photos/733857/pexels-photo-733857.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260); background-size:cover; background-repeat: no-repeat;background-position: center;">    <!-- Option 1: Bootstrap Bundle with Popper -->
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

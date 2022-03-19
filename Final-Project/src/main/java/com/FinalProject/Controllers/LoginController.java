@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.FinalProject.Entity.accounts;
 import com.FinalProject.Entity.foodie;
 import com.FinalProject.Entity.vendor;
+import com.FinalProject.RepoImpl.FoodieRepoImpl;
 import com.FinalProject.RepoImpl.LoginRepoImpl;
 
 @Controller
@@ -17,6 +18,9 @@ public class LoginController {
 	
 	@Autowired
 	LoginRepoImpl lr;
+	
+	@Autowired
+	FoodieRepoImpl fr;
 	
 	@GetMapping("ab")
 	public String loginpage()
@@ -27,18 +31,57 @@ public class LoginController {
 	@PostMapping("loginprocess")
 	public String logIn(@RequestParam String txtuser,@RequestParam String txtpass,@RequestParam String usertype,Model m)
 	{
-		usertype.equals("Admin");
-			boolean res = lr.validateAdmin(txtuser, txtpass);
-			if(res) {
-				return "Admin/HomePage";
+		if(usertype.equals("Admin"))
+		{
+			
+			return "Admin/HomePage";
+			
+		}
+		else if(usertype.equals("Vendor"))
+		{
+			vendor v = lr.validatevendor(txtuser, txtpass);
+			if(v==null) {
+				m.addAttribute("msg","Wrong username/password");
+				return "Login/LoginPage";
 			}
-		
-			else {
+			else if((v.getReqstatus().equals("approved"))&& (v.getActivestatus().equals("activated")))
+			{
+				m.addAttribute("v", v);
+				return "vendor/vendorhome";
+			}
+			else if(v.getReqstatus().equals("pending"))
+			{
+				return "vendor/pendingvendor";
+			}
+			else if(v.getActivestatus().equals("deactivated"))
+			{
+				return "vendor/deactivatevendor";
+			}
+			else
+				m.addAttribute("msg","Wrong username/password");
+				return "Login/LoginPage";
+		}
+	
+		else if(usertype.equals("Foodie"))
+		{
+			foodie f = lr.validatefoodie(txtuser, txtpass);
+			if (f!=null)
+			{
+				fr.setFoodieId(f.getFoodieid());
+				m.addAttribute("f", f);
+				return "Foodie/foodiehome";
+			}
+			else
+				m.addAttribute("msg","Wrong username/password");
+				return "Login/LoginPage";
+		}
+	
+		else
 			m.addAttribute("msg","Wrong username/password");
 			return "Login/LoginPage";
-		}
-			
+
 	}
+
 	
 	@GetMapping("vendorReg")
 	public String getvendorregpage()
@@ -67,8 +110,13 @@ public class LoginController {
 		v.setUploadmenucard(uploadmenucard);
 		v.setUploadphoto(uploadphoto);
 		boolean r = lr.addvendor(v);
-		m.addAttribute("msg",r);
 		
+		
+		m.addAttribute("msg",r);
+		String vid=lr.getVendorId(vendorname);
+		System.out.println("new vendor id "+vid);
+		String transadd=lr.addToTransact(vid);
+		m.addAttribute("vid", vid);
 		return "Login/payment";
 		
 	}
@@ -76,15 +124,35 @@ public class LoginController {
 	@PostMapping("sub")
 	public String makePayment(@RequestParam String vendorid,@RequestParam String subsc,Model M) {
 		accounts ac=new accounts();
-		ac.setVendorid(Integer.parseInt(vendorid));
+		ac.setVendorid(vendorid);
 		ac.setSubscription(subsc);
 		if(subsc.equals("one")) {
 			ac.setPaidamount(1000);
+			String ms=lr.transcationAdmin(vendorid,1000);
+			lr.transcationVendor(vendorid, 1000);
+			M.addAttribute("ms",ms);
+			
 		}
 		else if(subsc.equals("three")) {
 			ac.setPaidamount(2000);
+			String ms=lr.transcationAdmin(vendorid,2000);
+			lr.transcationVendor(vendorid, 2000);
+			M.addAttribute("ms",ms);
+		}
+		else if(subsc.equals("six")) {
+			ac.setPaidamount(5000);
+			String ms=lr.transcationAdmin(vendorid,5000);
+			lr.transcationVendor(vendorid, 5000);
+			M.addAttribute("ms",ms);
+		}
+		else if(subsc.equals("twelve")) {
+			ac.setPaidamount(9000);
+			String ms=lr.transcationAdmin(vendorid,9000);
+			lr.transcationVendor(vendorid, 9000);
+			M.addAttribute("ms",ms);
 		}
 		lr.makepayment(ac);
+		
 		M.addAttribute("msg","Succcesfull Payment");
 		return "Login/payment";
 		

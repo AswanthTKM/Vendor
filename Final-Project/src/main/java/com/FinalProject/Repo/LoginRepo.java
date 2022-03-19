@@ -12,6 +12,9 @@ public interface LoginRepo {
     public boolean addvendor (vendor ven);
     public boolean addfoodie (foodie fod);
     public boolean makepayment(accounts acc);
-    
+    public String transcationAdmin(String vendorid,int amount);
+    public String transcationVendor(String vendorid,int amount);
+    public String getVendorId(String name);
+    public String addToTransact(String user);
     
 }
